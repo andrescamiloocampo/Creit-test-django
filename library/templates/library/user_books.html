@@ -1,0 +1,54 @@
+{% extends 'library/base.html' %}
+
+{% block title %}My Books{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">My Books</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Author</th>
+                <th>Borrow Date</th>
+                <th>Return Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in borrow_records %}
+            <tr>
+                <td>{{ record.book.title }}</td>
+                <td>{{ record.book.author }}</td>
+                <td>{{ record.borrow_date|date:"M d, Y" }}</td>
+                <td>
+                    {% if record.return_date %}
+                        {{ record.return_date|date:"M d, Y" }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if record.returned %}
+                        <span class="badge bg-success">Returned</span>
+                    {% else %}
+                        <span class="badge bg-warning text-dark">Borrowed</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not record.returned %}
+                    <a href="{% url 'return-book' record.book.pk %}" class="btn btn-sm btn-outline-danger">Return</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">You haven't borrowed any books yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

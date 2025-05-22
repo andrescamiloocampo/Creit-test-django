@@ -1,0 +1,41 @@
+{% extends 'library/base.html' %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title">{{ book.title }}</h1>
+        <h3 class="card-subtitle mb-3 text-muted">{{ book.author }}</h3>
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <p><strong>Publication Year:</strong> {{ book.publication_year }}</p>
+                <p><strong>Available Stock:</strong> {{ book.stock }}</p>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            {% if user.is_authenticated %}
+                {% if not user.is_admin %}
+                    {% if book.stock > 0 %}
+                        {% if not user_has_book %}
+                            <a href="{% url 'borrow-book' book.pk %}" class="btn btn-success">Borrow This Book</a>
+                        {% else %}
+                            <a href="{% url 'return-book' book.pk %}" class="btn btn-warning">Return This Book</a>
+                        {% endif %}
+                    {% else %}
+                        <button class="btn btn-secondary" disabled>Out of Stock</button>
+                    {% endif %}
+                {% endif %}
+                
+                {% if user.is_admin %}
+                    <a href="{% url 'book-update' book.pk %}" class="btn btn-primary">Edit Book</a>
+                {% endif %}
+            {% else %}
+                <p class="text-muted">Please login to borrow this book.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
