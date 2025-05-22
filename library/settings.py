@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-j4&@%1c+u*-*c#&*b=mhn=ybn*4@y%6g042)t#r_8=ra)fjqav
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['useit-test-django.onrender.com', 'localhost', '127.0.0.1']
 
 AUTH_USER_MODEL = 'library.CustomUser'
 
