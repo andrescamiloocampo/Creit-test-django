@@ -61,6 +61,13 @@ py manage.py migrate
 py manage.py seed_data
 ```
 
+Luego de alimentar la base de datos se tienen 2 usuarios
+
+#### Credenciales
+
+- Usuario: admin Contraseña: admin123
+- Usuario: user Contraseña: user1234
+
 ### 7. Ejecuta el servidor de desarrollo
 
 ```bash
